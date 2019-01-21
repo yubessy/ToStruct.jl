@@ -16,7 +16,7 @@ end
 
 function tostruct(x::AbstractArray, T::Type{U} where U<:AbstractArray)
     ET = eltype(T)
-    T(collect(tostruct(v, ET) for v in x))
+    T(collect(tostruct(e, ET) for e in x))
 end
 
 function tostruct(x::Any, T::Union)
