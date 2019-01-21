@@ -1,9 +1,12 @@
 module ToStruct
 
 function tostruct(x::AbstractDict, T::DataType)
+    # In order to convert to struct, x's keys must be able to be converted to symbol.
+    x = Dict(Symbol(k) => v for (k, v) in x)
+
     args = map(fieldnames(T)) do fname
         FT = fieldtype(T, fname)
-        v = get(x, String(fname), nothing)
+        v = get(x, fname, nothing)
         tostruct(v, FT)
     end
     T(args...)

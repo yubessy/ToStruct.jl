@@ -26,6 +26,19 @@ end
             1
         )
     )
+    @test tostruct(Dict{Any,Any}(
+        "i" => 1,
+        "s2" => Dict{Any,Any}(
+            "str" => "foo",
+            "int" => 1
+        )
+    ), S1) == S1(
+        1,
+        S2(
+            "foo",
+            1
+        )
+    )
 end
 
 @testset "dict" begin
