@@ -59,4 +59,5 @@ end
     @test tostruct(1, Int) == 1
     @test tostruct(1., Float64) == 1.
     @test tostruct("foo", String) == "foo"
+    @test tostruct(1, Float64) == 1.
 end

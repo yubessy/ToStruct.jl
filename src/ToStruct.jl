@@ -28,7 +28,11 @@ function tostruct(x::Any, T::Union)
 end
 
 function tostruct(x::Any, T::Type)
-    x::T
+    try
+        x::T
+    catch
+        T(x)
+    end
 end
 
 end # module
