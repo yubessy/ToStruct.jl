@@ -23,7 +23,7 @@ end
     @test tostruct(Union{Nothing,Int}, nothing) == nothing
 end
 
-@testset "Array" begin
+@testset "Vector" begin
     @test tostruct(Vector{S1}, [
         Dict("i" => 1, "s" => "foo"),
         Dict("i" => 2, "s" => "bar"),
