@@ -33,12 +33,22 @@ end
 function tostruct(T::DataType, x::AbstractDict{AbstractString,Any})
     args = map(fieldnames(T)) do fname
         FT = fieldtype(T, fname)
-        v = get(x, String(fname), nothing)
+        v = getdefault(FT, x, String(fname))
         tostruct(FT, v)
     end
     T(args...)
 end
 
 tostruct(T::DataType, x::AbstractDict) = tostruct(T, convert(Dict{AbstractString,Any}, x))
+
+function getdefault(T::Type, x::AbstractDict, k::Any)
+    if T >: Nothing
+        get(x, k, nothing)
+    elseif T >: Missing
+        get(x, k, missing)
+    else
+        x[k]
+    end
+end
 
 end # module

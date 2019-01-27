@@ -11,6 +11,12 @@ struct S2
     s1::S1
 end
 
+struct S3
+    si::Union{String,Int}
+    ni::Union{Nothing,Int}
+    mi::Union{Missing,Int}
+end
+
 @testset "Any" begin
     @test tostruct(Int, 1) == 1
     @test tostruct(Float64, 1.) == 1.
@@ -54,4 +60,8 @@ end
     )) == S2(
         S1(1, "foo")
     )
+    @test tostruct(S3, Dict("si" => "foo", "ni" => 1, "mi" => 1)) == S3("foo", 1, 1)
+    @test tostruct(S3, Dict("si" => 1, "mi" => 1)).ni == nothing
+    @test ismissing(tostruct(S3, Dict("si" => 1, "ni" => 1)).mi)
+    @test_throws KeyError tostruct(S3, Dict("ni" => 1, "mi" => 1))
 end
