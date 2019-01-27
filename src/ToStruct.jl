@@ -4,7 +4,11 @@ function tostruct(T::Type, x::Any)
     try
         x::T
     catch
-        T(x)
+        try
+            convert(T, x)
+        catch
+            T(x)
+        end
     end
 end
 
