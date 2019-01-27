@@ -26,16 +26,15 @@ function tostruct(T::Type{U} where U<:AbstractDict, x::AbstractDict)
     T(tostruct(KT, k) => tostruct(VT, v) for (k, v) in x)
 end
 
-function tostruct(T::DataType, x::AbstractDict)
-    # In order to convert to struct, x's keys must be able to be converted to symbol.
-    x = Dict(Symbol(k) => v for (k, v) in x)
-
+function tostruct(T::DataType, x::AbstractDict{AbstractString,Any})
     args = map(fieldnames(T)) do fname
         FT = fieldtype(T, fname)
-        v = get(x, fname, nothing)
+        v = get(x, String(fname), nothing)
         tostruct(FT, v)
     end
     T(args...)
 end
+
+tostruct(T::DataType, x::AbstractDict) = tostruct(T, convert(Dict{AbstractString,Any}, x))
 
 end # module
