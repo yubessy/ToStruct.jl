@@ -23,7 +23,6 @@ struct Bar
     foo::Foo
 end
 
-raw = Dict("foo" => Dict("i" => 1, "s" => "hello"))
-ToStruct.tostruct(raws, Bar)
-Bar(Foo(1, "hello"))
+x = Dict("foo" => Dict("i" => 1, "s" => "hello"))
+ToStruct.tostruct(Bar, x) == Bar(Foo(1, "hello")) # true
 ```
