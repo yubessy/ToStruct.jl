@@ -1,36 +1,36 @@
 module ToStruct
 
-function tostruct(x::AbstractDict, T::DataType)
+function tostruct(T::DataType, x::AbstractDict)
     # In order to convert to struct, x's keys must be able to be converted to symbol.
     x = Dict(Symbol(k) => v for (k, v) in x)
 
     args = map(fieldnames(T)) do fname
         FT = fieldtype(T, fname)
         v = get(x, fname, nothing)
-        tostruct(v, FT)
+        tostruct(FT, v)
     end
     T(args...)
 end
 
-function tostruct(x::AbstractDict, T::Type{U} where U<:AbstractDict)
+function tostruct(T::Type{U} where U<:AbstractDict, x::AbstractDict)
     KT, VT = eltype(T()).types
-    T(tostruct(k, KT) => tostruct(v, VT) for (k, v) in x)
+    T(tostruct(KT, k) => tostruct(VT, v) for (k, v) in x)
 end
 
-function tostruct(x::AbstractArray, T::Type{U} where U<:AbstractArray)
+function tostruct(T::Type{U} where U<:AbstractArray, x::AbstractArray)
     ET = eltype(T)
-    T(collect(tostruct(e, ET) for e in x))
+    T(collect(tostruct(ET, e) for e in x))
 end
 
-function tostruct(x::Any, T::Union)
+function tostruct(T::Union, x::Any)
     try
-        tostruct(x, T.a)
+        tostruct(T.a, x)
     catch
-        tostruct(x, T.b)
+        tostruct(T.b, x)
     end
 end
 
-function tostruct(x::Any, T::Type)
+function tostruct(T::Type, x::Any)
     try
         x::T
     catch
