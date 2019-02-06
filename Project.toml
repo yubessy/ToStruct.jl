@@ -1,4 +1,4 @@
 name = "ToStruct"
 uuid = "43ec2cc1-0e50-5406-a854-b7ff8fdb8dad"
 authors = ["Shotaro Tanaka"]
-version = "0.2.0"
+version = "0.2.1"

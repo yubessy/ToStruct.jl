@@ -13,10 +13,12 @@ function tostruct(T::Type, x::Any)
 end
 
 function tostruct(T::Union, x::Any)
+    # NOTE: T.b is more specific in most cases
+    #       For instance union of String and Nothing types wile automatically ordered to be Union{Nothing,String}
     try
-        tostruct(T.a, x)
-    catch
         tostruct(T.b, x)
+    catch
+        tostruct(T.a, x)
     end
 end
 
