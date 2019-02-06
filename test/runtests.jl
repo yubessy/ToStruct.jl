@@ -27,6 +27,10 @@ end
 @testset "Union" begin
     @test tostruct(Union{Nothing,Int}, 1) == 1
     @test tostruct(Union{Nothing,Int}, nothing) == nothing
+    # Left type will be given priority
+    @test tostruct(Union{Float64,Int}, 1.) == 1
+    # Union{Int,Float64} will be automatically reordered to Union{Float64,Int} by julia compiler
+    @test tostruct(Union{Int,Float64}, 1.) == 1
 end
 
 @testset "Vector" begin
