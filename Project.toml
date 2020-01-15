@@ -2,3 +2,12 @@ name = "ToStruct"
 uuid = "43ec2cc1-0e50-5406-a854-b7ff8fdb8dad"
 authors = ["Shotaro Tanaka"]
 version = "0.2.1"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
