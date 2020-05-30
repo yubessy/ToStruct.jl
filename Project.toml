@@ -1,7 +1,7 @@
 name = "ToStruct"
 uuid = "43ec2cc1-0e50-5406-a854-b7ff8fdb8dad"
 authors = ["Shotaro Tanaka"]
-version = "0.2.2"
+version = "0.2.3"
 
 [compat]
 julia = "1"
