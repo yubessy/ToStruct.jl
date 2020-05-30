@@ -41,7 +41,9 @@ function tostruct(T::DataType, x::AbstractDict{AbstractString})
     T(args...)
 end
 
-tostruct(T::DataType, x::AbstractDict) = tostruct(T, convert(Dict{AbstractString,Any}, x))
+function tostruct(T::DataType, x::AbstractDict)
+    tostruct(T, convert(Dict{AbstractString,Any}, x))
+end
 
 function getdefault(T::Type, x::AbstractDict, k::Any)
     if T >: Nothing
