@@ -14,7 +14,7 @@ end
 
 function tostruct(T::Union, x::Any)
     # NOTE: T.b is more specific in most cases
-    #       For instance union of String and Nothing types wile automatically ordered to be Union{Nothing,String}
+    #       For instance Union{String,Nothing} will be normalized to Union{Nothing,String}
     try
         tostruct(T.b, x)
     catch
