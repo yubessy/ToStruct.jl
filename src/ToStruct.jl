@@ -14,7 +14,7 @@ end
 
 function tostruct(T::Union, x::Any)
     # NOTE: T.b is more specific in most cases
-    #       For instance union of String and Nothing types wile automatically ordered to be Union{Nothing,String}
+    #       For instance Union{String,Nothing} will be normalized to Union{Nothing,String}
     try
         tostruct(T.b, x)
     catch
@@ -41,7 +41,9 @@ function tostruct(T::DataType, x::AbstractDict{AbstractString})
     T(args...)
 end
 
-tostruct(T::DataType, x::AbstractDict) = tostruct(T, convert(Dict{AbstractString,Any}, x))
+function tostruct(T::DataType, x::AbstractDict)
+    tostruct(T, convert(Dict{AbstractString,Any}, x))
+end
 
 function getdefault(T::Type, x::AbstractDict, k::Any)
     if T >: Nothing
