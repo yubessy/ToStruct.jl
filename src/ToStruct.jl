@@ -32,6 +32,11 @@ function tostruct(T::Type{U} where U<:AbstractDict, x::AbstractDict)
     T(tostruct(KT, k) => tostruct(VT, v) for (k, v) in x)
 end
 
+function tostruct(T::Type{Any}, x::AbstractDict)
+    # This method is required to avoid tostruct(Any, Dict("a" => 1)) to be dispatched to tostruct(T::DataType, x::AbstractDict{AbstractString})
+    x
+end
+
 function tostruct(T::DataType, x::AbstractDict{AbstractString})
     args = map(fieldnames(T)) do fname
         FT = fieldtype(T, fname)

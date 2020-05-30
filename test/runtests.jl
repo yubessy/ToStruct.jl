@@ -18,6 +18,14 @@ struct S3
 end
 
 @testset "Any" begin
+    @test tostruct(Any, 1) == 1.
+    @test tostruct(Any, 1.) == 1.
+    @test tostruct(Any, "foo") == "foo"
+    @test tostruct(Any, [1, 2, 3]) == [1, 2, 3]
+    @test tostruct(Any, Dict("a" => 1)) == Dict("a" => 1)
+end
+
+@testset "Primitive" begin
     @test tostruct(Int, 1) == 1
     @test tostruct(Float64, 1.) == 1.
     @test tostruct(String, "foo") == "foo"
