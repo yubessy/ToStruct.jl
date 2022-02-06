@@ -28,12 +28,12 @@ function tostruct(T::Union, x::Any)
     end
 end
 
-function tostruct(T::Type{U} where {U<:AbstractVector}, x::AbstractVector)
+function tostruct(T::Type{U} where U<:AbstractVector, x::AbstractVector)
     ET = eltype(T)
     T(collect(tostruct(ET, e) for e in x))
 end
 
-function tostruct(T::Type{U} where {U<:AbstractDict}, x::AbstractDict)
+function tostruct(T::Type{U} where U<:AbstractDict, x::AbstractDict)
     KT, VT = eltype(T()).types
     T(tostruct(KT, k) => tostruct(VT, v) for (k, v) in x)
 end
