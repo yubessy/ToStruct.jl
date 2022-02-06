@@ -1,4 +1,5 @@
 module ToStruct
+using TimeZones
 
 function tostruct(T::Type, x::Any)
     try
