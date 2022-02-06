@@ -4,10 +4,14 @@ function tostruct(T::Type, x::Any)
     try
         x::T
     catch
-        try
-            convert(T, x)
-        catch
-            T(x)
+        if isa(ZonedDateTime, T)
+            ZonedDateTime(join(split(x,"+"),".000+"))
+        else
+            try
+                convert(T, x)
+            catch
+                T(x)
+            end
         end
     end
 end
