@@ -5,7 +5,7 @@ function tostruct(T::Type, x::Any)
     try
         x::T
     catch
-# Kaeptenblaubaer: splicing in ".000" for avoiding parsing exception from ZonedDateTimes with missing microsenconds     
+# Kaeptenblaubaer: splicing in ".000" to avoid parsing exception from ZonedDateTimes with missing milliseconds     
         if isa(T, Type{ZonedDateTime}) && length(split(x, ".")) == 1
             ZonedDateTime(join(split(x, "+"), ".000+"))
         else
